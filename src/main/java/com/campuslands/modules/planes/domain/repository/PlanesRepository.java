@@ -10,4 +10,5 @@ public interface PlanesRepository {
     Optional<Planes> findById(int id);
     void delete(int id);
     List<Planes> findAll();
+    Optional<Planes> PlateNumber(String plateNumber);
 }

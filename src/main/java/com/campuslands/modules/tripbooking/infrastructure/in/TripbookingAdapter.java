@@ -1,7 +1,5 @@
 package com.campuslands.modules.tripbooking.infrastructure.in;
 
-import java.sql.Date;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
@@ -45,18 +43,12 @@ public class TripbookingAdapter {
                     scanner.nextLine(); // Consumir el salto de línea
                     System.out.print("Ingrese la fecha de la reserva (YYYY-MM-DD): ");
                     String dateStr = scanner.nextLine();
-                    Date date;
-                    try {
-                        date = (Date) dateFormat.parse(dateStr);
-                    } catch (ParseException e) {
-                        System.out.println("Formato de fecha incorrecto. Use el formato YYYY-MM-DD.");
-                        break;
-                    }
+                    
                     System.out.print("Ingrese el ID del viaje: ");
                     int idTrips = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
 
-                    TripBooking newTripBooking = new TripBooking(id, date, idTrips);
+                    TripBooking newTripBooking = new TripBooking(id, dateStr, idTrips);
                     tripBookingService.createTripbooking(newTripBooking);
                     System.out.println("TripBooking registrado correctamente.");
                 }
@@ -66,18 +58,12 @@ public class TripbookingAdapter {
                     scanner.nextLine(); // Consumir el salto de línea
                     System.out.print("Ingrese la nueva fecha de la reserva (YYYY-MM-DD): ");
                     String updateDateStr = scanner.nextLine();
-                    Date updateDate;
-                    try {
-                        updateDate = (Date) dateFormat.parse(updateDateStr);
-                    } catch (ParseException e) {
-                        System.out.println("Formato de fecha incorrecto. Use el formato YYYY-MM-DD.");
-                        break;
-                    }
+                    
                     System.out.print("Ingrese el nuevo ID del viaje: ");
                     int updateIdTrips = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
 
-                    TripBooking tripBookingToUpdate = new TripBooking(updateId, updateDate, updateIdTrips);
+                    TripBooking tripBookingToUpdate = new TripBooking(updateId, updateDateStr, updateIdTrips);
                     tripBookingService.updateTripbooking(tripBookingToUpdate);
                     System.out.println("TripBooking actualizado correctamente.");
                 }

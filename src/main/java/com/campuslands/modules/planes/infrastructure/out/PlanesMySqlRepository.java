@@ -129,4 +129,28 @@ public class PlanesMySqlRepository extends MySQL implements PlanesRepository {
         }
         return planes;
     }
+
+    public Optional<Planes> PlateNumber(String plateNumber) {
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            String query = "SELECT id, plateNumber, capacity, fabrication_date, id_status, id_model FROM planes WHERE plateNumber = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, plateNumber);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        Planes planes = new Planes(
+                                resultSet.getInt("id"),
+                                resultSet.getString("plateNumber"),
+                                resultSet.getInt("capacity"),
+                                resultSet.getString("fabrication_date"),
+                                resultSet.getInt("id_status"),
+                                resultSet.getInt("id_model"));
+                        return Optional.of(planes);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e, "ERROR", 0);
+        }
+        return Optional.empty();
+    }
 }

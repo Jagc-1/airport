@@ -27,7 +27,7 @@ public class TripbookingMySQL extends MySQL implements TripBookingRepository {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "INSERT INTO trip_bookings (date, idtrips) VALUES (?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setDate(1, new java.sql.Date(tripBooking.getDate().getTime()));
+                statement.setString(1, tripBooking.getDate());
                 statement.setInt(2, tripBooking.getId());
                 statement.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Se Agrego Correctamente", "INSERT", 1);
@@ -43,7 +43,7 @@ public class TripbookingMySQL extends MySQL implements TripBookingRepository {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "UPDATE trip_bookings SET date = ?, trip_id = ? WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setDate(1, new java.sql.Date(tripBooking.getDate().getTime()));
+                statement.setString(1, tripBooking.getDate());
                 statement.setInt(2, tripBooking.getIdtrips());
                 statement.setInt(3, tripBooking.getId());
                 statement.executeUpdate();
@@ -65,7 +65,7 @@ public class TripbookingMySQL extends MySQL implements TripBookingRepository {
                     if (resultSet.next()) {
                         TripBooking tripBooking = new TripBooking(
                                 resultSet.getInt("id"),
-                                resultSet.getDate("date"),
+                                resultSet.getString("date"),
                                 resultSet.getInt("trip_id"));
                         return Optional.of(tripBooking);
                     }
@@ -103,7 +103,7 @@ public class TripbookingMySQL extends MySQL implements TripBookingRepository {
                 while (resultSet.next()) {
                     TripBooking tripBooking = new TripBooking(
                             resultSet.getInt("id"),
-                            resultSet.getDate("date"),
+                            resultSet.getString("date"),
                             resultSet.getInt("trip_id"));
                     tripBookings.add(tripBooking);
                 }

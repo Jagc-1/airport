@@ -27,7 +27,7 @@ public class TripBookingdetailsMySQL extends MySQL implements TripBookingReposit
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "INSERT INTO tripbooking (date,idtrips) VALUES (?,?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setDate(1, tripBooking.getDate());
+                statement.setString(1, tripBooking.getDate());
                 statement.setInt(2, tripBooking.getIdtrips());
                 statement.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Se Agrego el detalle del libro de viajes", "INSERT", 0);
@@ -43,7 +43,7 @@ public class TripBookingdetailsMySQL extends MySQL implements TripBookingReposit
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "UPDATE tripbooking SET booking_date = ? WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setDate(1, tripBooking.getDate());
+                statement.setString(1, tripBooking.getDate());
                 statement.setInt(2, tripBooking.getId());
                 statement.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Se Actualizo el detalle del libro de viajes", "INSERT", 0);
@@ -64,7 +64,7 @@ public class TripBookingdetailsMySQL extends MySQL implements TripBookingReposit
                     if (resultSet.next()) {
                         TripBooking tripBooking = new TripBooking(
                                 resultSet.getInt("id"),
-                                resultSet.getDate("date"),
+                                resultSet.getString("date"),
                                 resultSet.getInt("idtrips"));
                         JOptionPane.showMessageDialog(null, "Se Encontro el id del detalle del libro de viajes",
                                 "INSERT", 0);
@@ -104,7 +104,7 @@ public class TripBookingdetailsMySQL extends MySQL implements TripBookingReposit
                 while (resultSet.next()) {
                     TripBooking booking = new TripBooking(
                             resultSet.getInt("id"),
-                            resultSet.getDate("date"),
+                            resultSet.getString("date"),
                             resultSet.getInt("idtrips"));
                     tripBookings.add(booking);
                     JOptionPane.showMessageDialog(null, "Se Encontraron todos los detalles del libro de viajes",

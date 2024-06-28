@@ -1,7 +1,9 @@
 package com.campuslands;
 
+import java.util.Optional;
 import java.util.Scanner;
 
+import com.campuslands.modules.planes.domain.models.Planes;
 import com.campuslands.modules.airports.infrastructure.out.AirportsOutModule;
 import com.campuslands.modules.customers.infrastructure.out.CustomersOutModule;
 import com.campuslands.modules.documenttypes.infrastructure.out.DocumenttypesOutModule;
@@ -11,8 +13,11 @@ import com.campuslands.modules.tripbooking.infrastructure.out.TripbookingOutModu
 import com.campuslands.modules.tripbookingdetails.infrastructure.out.TripbookingdetailsOutModule;
 import com.campuslands.modules.tripcrews.infrastructure.out.TripcrewsOutModule;
 import com.campuslands.modules.trips.infrastructure.out.TripsOutModule;
+import com.campuslands.modules.planes.infrastructure.out.PlanesMySqlRepository;
 
 public class Main {
+    private static final PlanesMySqlRepository repository = new PlanesMySqlRepository();
+
     public static void main(String[] args) {
         menuUser();
 
@@ -53,8 +58,9 @@ public class Main {
                 default:
                     System.out.println("Opción inválida, inténtelo de nuevo.");
             }
-        } 
+        }
     }
+
     public static void subMenuAdmin() {
         try (Scanner scanner = new Scanner(System.in)) {
             TripsOutModule tripsOutModule = new TripsOutModule();
@@ -67,13 +73,12 @@ public class Main {
                 System.out.println("5. Escalas");
                 System.out.println("6. Tarifas");
                 System.out.println("7. Tipo de Documento");
-               // System.out.println("8. Consultas");
-                System.out.println("9. Salir");
+                System.out.println("8. Salir");
 
                 System.out.println("");
                 // scanner.next();
-              //  String role f
-              int rol = 1;
+                // String role f
+                int rol = 1;
                 int choice = scanner.nextInt();
                 // scanner.nextLine(); // Consumir el salto de línea
                 switch (choice) {
@@ -102,9 +107,6 @@ public class Main {
                         document.module().start();
 
                     case 8:
-                        //subMenuConsults();
-
-                    case 9:
                         System.out.println("Saliendo...");
                         return; // Salir del programa
 
@@ -114,9 +116,6 @@ public class Main {
             }
         }
     }
-
-   
-    
 
     public static void bMenuVentas() {
         try (Scanner scanner = new Scanner(System.in)) {
@@ -131,7 +130,7 @@ public class Main {
                 System.out.println("6. Eliminar Reserva");
                 System.out.println("7. Salir");
                 System.out.print("Ingrese la opción: ");
-int rol = 3;
+                int rol = 3;
                 int choice = scanner.nextInt();
                 // scanner.nextLine(); // Consumir el salto de línea
 
@@ -165,24 +164,30 @@ int rol = 3;
     }
 
     public static void subMenuTecnico() {
+        RevisionsOutModule revisions = new RevisionsOutModule();
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
-                System.out.println("1. Revisiones");
-                System.out.println("2. Salir");
-                System.out.print("Ingrese la opción: ");
-
+                System.out.println("Seleccione la opción:");
+                System.out.println("1. Consultar Historial de Revisiones de Avión");
+                System.out.println("2. Revisiones");
+                System.out.println("3. Salir");
+                System.out.print("Opción: ");
                 int choice = scanner.nextInt();
                 // scanner.nextLine(); // Consumir el salto de línea
-int rol =2;
+                int rol = 2;
+
                 switch (choice) {
                     case 1:
-                        RevisionsOutModule revisionsOutModule = new RevisionsOutModule();
-                        revisionsOutModule.module().start(rol);
+                        consultarAvionPorMatricula();
+                        break;
 
                     case 2:
+                        System.out.println("Revisiones");
+                        revisions.module().start(rol);
+                        break;
+                    case 3:
                         System.out.println("Saliendo...");
                         return; // Salir del programa
-
                     default:
                         System.out.println("Opción inválida, inténtelo de nuevo.");
                 }
@@ -193,6 +198,7 @@ int rol =2;
     public static void subMenuCliente() {
         try (Scanner scanner = new Scanner(System.in)) {
             TripsOutModule trips = new TripsOutModule();
+            int rol =4;
             TripbookingdetailsOutModule tripDetails = new TripbookingdetailsOutModule();
             while (true) {
                 System.out.println("1. Buscar Vuelos");
@@ -209,7 +215,10 @@ int rol =2;
 
                 int choice = scanner.nextInt();
                 // scanner.nextLine(); // Consumir el salto de línea
-
+                /*if ( rol !=1 ){
+                    System.out.println("El usuario no tien este permiso");
+                    break;
+                }*/
                 switch (choice) {
                     case 1 -> {
                         trips.module().start();
@@ -253,4 +262,48 @@ int rol =2;
         }
     }
 
+    public static void consultarAvionPorMatricula() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese la matrícula del avión: ");
+        String matricula = scanner.nextLine();
+
+        Optional<Planes> avionOptional = repository.PlateNumber(matricula);
+        if (avionOptional.isPresent()) {
+            Planes avion = avionOptional.get();
+            System.out.println("Avión encontrado:");
+            System.out.println("ID: " + avion.getId());
+            System.out.println("Matrícula: " + avion.getPlateNumber());
+            System.out.println("Capacidad: " + avion.getCapacity());
+            System.out.println("Fecha de Fabricación: " + avion.getFabrication_date());
+            System.out.println("ID de Estado: " + avion.getId_status());
+            System.out.println("ID de Modelo: " + avion.getId_model());
+        } else {
+            System.out.println("No se encontró ningún avión con la matrícula " + matricula);
+        }
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
