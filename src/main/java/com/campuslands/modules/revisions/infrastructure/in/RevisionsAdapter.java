@@ -16,11 +16,12 @@ public class RevisionsAdapter {
         this.revisionsService = revisionsService;
     }
 
-    public void start() {
+    public void start(int rol) {
         Scanner scanner = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         while (true) {
+         
             System.out.println("Menú de Gestión de Revisiones");
             System.out.println("1. Registrar Revisión");
             System.out.println("2. Actualizar Revisión");
@@ -36,6 +37,7 @@ public class RevisionsAdapter {
 
             switch (choice) {
                 case 1:
+                if (rol !=1 || rol!=2){break;}
                     System.out.print("Ingrese el ID de la revisión: ");
                     int id = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
@@ -52,6 +54,7 @@ public class RevisionsAdapter {
                     break;
 
                 case 2:
+                if (rol !=1 || rol!=2){break;}
                     System.out.print("Ingrese el ID de la revisión a actualizar: ");
                     int updateId = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
@@ -68,6 +71,7 @@ public class RevisionsAdapter {
                     break;
 
                 case 3:
+                if (rol !=1 || rol!=2){break;}
                     System.out.print("Ingrese el ID de la revisión a buscar: ");
                     int findId = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
@@ -80,6 +84,7 @@ public class RevisionsAdapter {
                     break;
 
                 case 4:
+                if (rol !=1 || rol!=2){break;}
                     System.out.print("Ingrese el ID de la revisión a eliminar: ");
                     int deleteId = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
@@ -89,6 +94,7 @@ public class RevisionsAdapter {
                     break;
 
                 case 5:
+                if (rol !=1 || rol!=2){break;}
                     List<Revisions> allRevisions = revisionsService.getAllRevisions();
                     allRevisions.forEach(rev -> {
                         System.out.println("ID: " + rev.getId() + ", Fecha: "

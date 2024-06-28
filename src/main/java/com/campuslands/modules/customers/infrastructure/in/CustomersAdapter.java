@@ -15,7 +15,7 @@ public class CustomersAdapter {
         this.customersService = customersService;
     }
 
-     public void start() {
+     public void start(int rol) {
     Scanner scanner = new Scanner(System.in);
     
     while (true) {
