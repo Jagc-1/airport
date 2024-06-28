@@ -53,7 +53,7 @@ public class Main {
                 default:
                     System.out.println("Opción inválida, inténtelo de nuevo.");
             }
-        }
+        } 
     }
     public static void subMenuAdmin() {
         try (Scanner scanner = new Scanner(System.in)) {
