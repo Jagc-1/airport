@@ -223,7 +223,6 @@ public class Main {
                     case 1 -> {
                         trips.module().start();
                     }
-
                     case 2 -> {
                         trips.module().start();
                     }
