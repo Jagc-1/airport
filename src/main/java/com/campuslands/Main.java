@@ -53,9 +53,8 @@ public class Main {
                 default:
                     System.out.println("Opción inválida, inténtelo de nuevo.");
             }
-        }
+        } 
     }
-
     public static void subMenuAdmin() {
         try (Scanner scanner = new Scanner(System.in)) {
             TripsOutModule tripsOutModule = new TripsOutModule();
@@ -68,18 +67,19 @@ public class Main {
                 System.out.println("5. Escalas");
                 System.out.println("6. Tarifas");
                 System.out.println("7. Tipo de Documento");
-                System.out.println("8. Consultas");
+               // System.out.println("8. Consultas");
                 System.out.println("9. Salir");
 
                 System.out.println("");
                 // scanner.next();
-
+              //  String role f
+              int rol = 1;
                 int choice = scanner.nextInt();
                 // scanner.nextLine(); // Consumir el salto de línea
                 switch (choice) {
                     case 1:
                         PlanesOutModule plane = new PlanesOutModule();
-                        plane.module().start();
+                        plane.module().start(rol);
 
                     case 2:
                         TripcrewsOutModule tripcrewsOutModule = new TripcrewsOutModule();
@@ -102,7 +102,7 @@ public class Main {
                         document.module().start();
 
                     case 8:
-                        subMenuConsults();
+                        //subMenuConsults();
 
                     case 9:
                         System.out.println("Saliendo...");
@@ -115,44 +115,8 @@ public class Main {
         }
     }
 
-    public static void subMenuConsults() {
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                System.out.println("1. Consultar Vuelo");
-                System.out.println("2. Consultar Asignación de Tripulación");
-                System.out.println("3. Consultar Escalas del Trayecto");
-                System.out.println("4. Consultar Tarifas de Vuelo");
-                System.out.println("5. Salir");
-                System.out.println("");
-                System.out.print("Ingrese la opción: ");
-
-                int choice = scanner.nextInt();
-                // scanner.nextLine(); // Consumir el salto de línea
-
-                switch (choice) {
-                    case 1 -> {
-                        PlanesOutModule plane = new PlanesOutModule();
-                        plane.module().start();
-                    }
-                    case 2 -> {
-                        System.out.println("NADA");
-                    }
-                    case 3 -> {
-                        System.out.println("NADA");
-                    }
-                    case 4 -> {
-                        System.out.println("NADA");
-                    }
-                    case 5 -> {
-                        System.out.println("Saliendo...");
-                        return; // Salir del programa
-                    }
-                    default ->
-                        System.out.println("Opción inválida, inténtelo de nuevo.");
-                }
-            }
-        }
-    }
+   
+    
 
     public static void bMenuVentas() {
         try (Scanner scanner = new Scanner(System.in)) {
@@ -167,28 +131,28 @@ public class Main {
                 System.out.println("6. Eliminar Reserva");
                 System.out.println("7. Salir");
                 System.out.print("Ingrese la opción: ");
-
+int rol = 3;
                 int choice = scanner.nextInt();
                 // scanner.nextLine(); // Consumir el salto de línea
 
                 switch (choice) {
                     case 1 ->
-                        tripbookingOutModule.module().start();
+                        tripbookingOutModule.module().start(rol);
 
                     case 2 ->
-                        CustomersOutModule.module().start();
+                        CustomersOutModule.module().start(rol);
 
                     case 3 ->
-                        CustomersOutModule.module().start();
+                        CustomersOutModule.module().start(rol);
 
                     case 4 ->
-                        tripbookingOutModule.module().start();
+                        tripbookingOutModule.module().start(rol);
 
                     case 5 ->
-                        CustomersOutModule.module().start();
+                        CustomersOutModule.module().start(rol);
 
                     case 6 ->
-                        tripbookingOutModule.module().start();
+                        tripbookingOutModule.module().start(rol);
                     case 7 -> {
                         System.out.println("Saliendo...");
                         return;
@@ -209,11 +173,11 @@ public class Main {
 
                 int choice = scanner.nextInt();
                 // scanner.nextLine(); // Consumir el salto de línea
-
+int rol =2;
                 switch (choice) {
                     case 1:
                         RevisionsOutModule revisionsOutModule = new RevisionsOutModule();
-                        revisionsOutModule.module().start();
+                        revisionsOutModule.module().start(rol);
 
                     case 2:
                         System.out.println("Saliendo...");

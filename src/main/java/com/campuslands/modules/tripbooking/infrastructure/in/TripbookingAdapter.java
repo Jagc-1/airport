@@ -18,7 +18,7 @@ public class TripbookingAdapter {
         this.tripBookingService = tripBookingService;
     }
 
-    public void start() {
+    public void start(int rol) {
         Scanner scanner = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 

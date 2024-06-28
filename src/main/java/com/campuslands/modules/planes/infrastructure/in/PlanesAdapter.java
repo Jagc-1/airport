@@ -15,10 +15,11 @@ public class PlanesAdapter {
         this.planesService = planesService;
     }
 
-    public void start() {
+    public void start(int rol) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+
             System.out.println("Menú de Gestión de Aviones");
             System.out.println("1. Registrar Avión");
             System.out.println("2. Actualizar Avión");
@@ -33,7 +34,8 @@ public class PlanesAdapter {
             scanner.nextLine(); // Consumir el salto de línea
 
             switch (choice) {
-                case 1 -> {
+                case 1 -> { 
+                    if (rol!=1){break;}
                     System.out.print("Ingrese el número de matrícula del avión: ");
                     String createPlateNumber = scanner.nextLine();
                     System.out.print("Ingrese la capacidad del avión: ");
@@ -52,6 +54,7 @@ public class PlanesAdapter {
                     Planes newPlane = new Planes(createPlateNumber, createCapacity, fabricationDateStr,
                             createStatusId, createModelId);
                     planesService.createPlane(newPlane);
+                    break;
                 }
 
                 case 2 -> {
