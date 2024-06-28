@@ -10,4 +10,5 @@ public interface TripsRepository {
     Optional<Trips> findById(int id);
     void delete(int id);
     List<Trips> findAll();
+     List<Trips> buscarPorOrigenYDestino(String origen, String destino);
 }

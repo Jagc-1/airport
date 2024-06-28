@@ -2,6 +2,9 @@ package com.campuslands;
 
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.campuslands.modules.planes.domain.models.Planes;
 import com.campuslands.modules.airports.infrastructure.out.AirportsOutModule;
@@ -14,9 +17,12 @@ import com.campuslands.modules.tripbookingdetails.infrastructure.out.Tripbooking
 import com.campuslands.modules.tripcrews.infrastructure.out.TripcrewsOutModule;
 import com.campuslands.modules.trips.infrastructure.out.TripsOutModule;
 import com.campuslands.modules.planes.infrastructure.out.PlanesMySqlRepository;
+import com.campuslands.modules.trips.domain.models.Trips;
+import com.campuslands.modules.trips.infrastructure.out.TripsMySqlRepository;
 
 public class Main {
-    private static final PlanesMySqlRepository repository = new PlanesMySqlRepository();
+    private static Map<String, Integer> revisionesAviones = new HashMap<>();
+    private static TripsMySqlRepository tripsRepository = new TripsMySqlRepository();
 
     public static void main(String[] args) {
         menuUser();
@@ -178,7 +184,7 @@ public class Main {
 
                 switch (choice) {
                     case 1:
-                        consultarAvionPorMatricula();
+                        consultarRevisionesAvion(scanner);
                         break;
 
                     case 2:
@@ -198,7 +204,7 @@ public class Main {
     public static void subMenuCliente() {
         try (Scanner scanner = new Scanner(System.in)) {
             TripsOutModule trips = new TripsOutModule();
-            int rol =4;
+            int rol = 4;
             TripbookingdetailsOutModule tripDetails = new TripbookingdetailsOutModule();
             while (true) {
                 System.out.println("1. Buscar Vuelos");
@@ -214,17 +220,30 @@ public class Main {
                 System.out.print("Ingrese la opción: ");
 
                 int choice = scanner.nextInt();
-                // scanner.nextLine(); // Consumir el salto de línea
-                /*if ( rol !=1 ){
-                    System.out.println("El usuario no tien este permiso");
-                    break;
-                }*/
                 switch (choice) {
                     case 1 -> {
-                        trips.module().start();
+                        TripsMySqlRepository tripsRepository = new TripsMySqlRepository();
+
+                        System.out.println("Ingrese el ID del vuelo que desea buscar:");
+                        int idABuscar = scanner.nextInt();
+                        scanner.nextLine(); // Consumir el salto de línea después del número
+
+                        Optional<Trips> vueloEncontrado = tripsRepository.buscarVuelos(idABuscar);
+
+                        if (vueloEncontrado.isPresent()) {
+                            Trips vuelo = vueloEncontrado.get();
+                            System.out.println("Vuelo encontrado:");
+                            System.out.println("ID: " + vuelo.getId());
+                            System.out.println("Fecha: " + vuelo.getDate());
+                            System.out.println("Precio: " + vuelo.getPrice());
+                            System.out.println("Origen: " + vuelo.getDeparture_airport());
+                            System.out.println("Destino: " + vuelo.getArrival_airport());
+                        } else {
+                            System.out.println("No se encontró ningún vuelo con ID " + idABuscar);
+                        }
                     }
                     case 2 -> {
-                        trips.module().start();
+                        seleccionarVuelos();
                     }
 
                     case 3 -> {
@@ -261,48 +280,57 @@ public class Main {
         }
     }
 
-    public static void consultarAvionPorMatricula() {
-        Scanner scanner = new Scanner(System.in);
+    public static void consultarRevisionesAvion(Scanner scanner) {
         System.out.print("Ingrese la matrícula del avión: ");
         String matricula = scanner.nextLine();
 
-        Optional<Planes> avionOptional = repository.PlateNumber(matricula);
-        if (avionOptional.isPresent()) {
-            Planes avion = avionOptional.get();
-            System.out.println("Avión encontrado:");
-            System.out.println("ID: " + avion.getId());
-            System.out.println("Matrícula: " + avion.getPlateNumber());
-            System.out.println("Capacidad: " + avion.getCapacity());
-            System.out.println("Fecha de Fabricación: " + avion.getFabrication_date());
-            System.out.println("ID de Estado: " + avion.getId_status());
-            System.out.println("ID de Modelo: " + avion.getId_model());
+        if (revisionesAviones.containsKey(matricula)) {
+            int revisiones = revisionesAviones.get(matricula);
+            System.out.println("El avión con matrícula " + matricula + " ha sido revisado " + revisiones + " veces.");
         } else {
             System.out.println("No se encontró ningún avión con la matrícula " + matricula);
         }
     }
 
+    public static void seleccionarVuelos() {
+        System.out.println("Opción Seleccionar Vuelos seleccionada.");
+
+        List<Trips> vuelosDisponibles = tripsRepository.findAll();
+
+        if (!vuelosDisponibles.isEmpty()) {
+            System.out.println("Lista de vuelos disponibles:");
+            for (Trips vuelo : vuelosDisponibles) {
+                System.out.println("ID: " + vuelo.getId());
+                System.out.println("Origen: " + vuelo.getDeparture_airport());
+                System.out.println("Destino: " + vuelo.getArrival_airport());
+                System.out.println("Fecha: " + vuelo.getDate());
+                System.out.println("Precio: " + vuelo.getPrice());
+                System.out.println("---------------------------");
+            }
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Seleccione el número de vuelo: ");
+            int seleccion = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
+
+            Trips vueloSeleccionado = buscarVuelos(seleccion);
+
+            if (vueloSeleccionado != null) {
+                System.out.println("Ha seleccionado el vuelo:");
+                System.out.println("ID: " + vueloSeleccionado.getId());
+                System.out.println("Origen: " + vueloSeleccionado.getDeparture_airport());
+                System.out.println("Destino: " + vueloSeleccionado.getArrival_airport());
+                System.out.println("Fecha: " + vueloSeleccionado.getDate());
+                System.out.println("Precio: " + vueloSeleccionado.getPrice());
+            } else {
+                System.out.println("No se encontró el vuelo con ID " + seleccion);
+            }
+        } else {
+            System.out.println("No hay vuelos disponibles en este momento.");
+        }
+    }
+
+    private static Trips buscarVuelos(int id) {
+        return tripsRepository.findById(id).orElse(null);
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

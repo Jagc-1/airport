@@ -31,4 +31,10 @@ public class TripsService {
     public List<Trips> getAllTrips() {
         return tripsRepository.findAll();
     }
+
+    public List<Trips> buscarTrips(String origen, String destino) {
+        return tripsRepository.buscarPorOrigenYDestino(origen, destino);
+    }
+
+
 }
