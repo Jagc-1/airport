@@ -93,6 +93,9 @@ public class CustomersAdapter {
                 break;
             
             case 4:
+            if (rol!=1 ){
+                System.out.println("opcion no valida para el ususario ");
+                break;}
                 System.out.print("Ingrese el ID del cliente a eliminar: ");
                 int deleteId = scanner.nextInt();
                 scanner.nextLine(); // Consumir el salto de línea

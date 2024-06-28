@@ -31,4 +31,8 @@ public class PlanesService {
     public List<Planes> getAllPlanes() {
         return planesRepository.findAll();
     }
+
+     public Optional<Planes> findByPlateNumber(String plateNumber) {
+        return planesRepository.PlateNumber(plateNumber);
+    }
 }

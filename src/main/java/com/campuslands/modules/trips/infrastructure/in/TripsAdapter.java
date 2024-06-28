@@ -37,6 +37,7 @@ public class TripsAdapter {
 
             switch (choice) {
                 case 1:
+               
                     System.out.print("Ingrese el ID del viaje: ");
                     int id = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
@@ -63,6 +64,7 @@ public class TripsAdapter {
                     break;
 
                 case 2:
+             
                     System.out.print("Ingrese el ID del Trip a actualizar: ");
                     int updateId = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
@@ -89,6 +91,7 @@ public class TripsAdapter {
                     break;
 
                 case 3:
+            
                     System.out.print("Ingrese el ID del Trip a buscar: ");
                     int findId = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
@@ -100,6 +103,7 @@ public class TripsAdapter {
                     break;
 
                 case 4:
+              
                     System.out.print("Ingrese el ID del Trip a eliminar: ");
                     int deleteId = scanner.nextInt();
                     scanner.nextLine(); // Consumir el salto de línea
@@ -109,6 +113,8 @@ public class TripsAdapter {
                     break;
 
                 case 5:
+             
+                
                     List<Trips> allTrips = tripsService.getAllTrips();
                     allTrips.forEach(t -> {
                         System.out.println("ID: " + t.getId() + ", Fecha: " + dateFormat.format(t.getDate()) + ", Precio: $" + t.getPrice() + ", Aeropuerto de Salida: " + t.getDeparture_airport() + ", Aeropuerto de Llegada: " + t.getArrival_airport());
