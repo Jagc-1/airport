@@ -19,7 +19,7 @@ public class Trips {
     }
 
     public Trips(Date date, double price, String departure_airport, String arrival_airport) {
-        //this.id = id;
+      
         this.date = date;
         this.price = price;
         this.departure_airport = departure_airport;
@@ -64,6 +64,12 @@ public class Trips {
 
     public void setArrival_airport(String arrival_airport) {
         this.arrival_airport = arrival_airport;
+    }
+
+    @Override
+    public String toString() {
+        return "Trips [id=" + id + ", date=" + date + ", price=" + price + ", departure_airport=" + departure_airport
+                + ", arrival_airport=" + arrival_airport + "]";
     }
 
 }
