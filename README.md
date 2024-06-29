@@ -1,7 +1,6 @@
 
 ![Java](https://raw.githubusercontent.com/David-Albarracin/README_MATERIALS/main/java.png)
 
-
 # Sistema de Gestión de Vuelos
 
 ## Introducción
@@ -36,8 +35,9 @@ El proyecto implementa la arquitectura hexagonal combinada con el slicing vertic
 
 Las tecnologías seleccionadas y la arquitectura implementada proporcionan una base sólida y eficiente para el desarrollo del Sistema de Gestión de Vuelos de Vuelos Globales. Estas herramientas no solo garantizan la robustez y escalabilidad del sistema, sino que también facilitan la integración de nuevas funcionalidades y aseguran una gestión eficiente y segura de las operaciones aéreas de la aerolínea.
 
+## Hecho Por:
+
+- Johan Alexander García Campos
+- Juan José Basto González
 
 
-####Hecho Por:
-  Johan Alexander García Campos
-  Juan Jose Basto Gonzalez
