@@ -1,6 +1,7 @@
 
 ![Java](https://raw.githubusercontent.com/David-Albarracin/README_MATERIALS/main/java.png)
 
+
 # Sistema de Gestión de Vuelos
 
 ## Introducción
@@ -39,5 +40,3 @@ Las tecnologías seleccionadas y la arquitectura implementada proporcionan una b
 
 - Johan Alexander García Campos
 - Juan José Basto González
-
-
